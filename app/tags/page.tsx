@@ -93,7 +93,7 @@ export default async function TagsPage() {
             {sortedTags.map((tag) => (
               <div key={tag} className="border-b border-zinc-200 dark:border-zinc-800 pb-8">
                 <h2 className="text-2xl font-bold text-black dark:text-white mb-6 capitalize">
-                  {tag} ({tagsData[tag].length})
+                  <Link href={`/tags/${tag}`}>{tag}</Link> ({tagsData[tag].length})
                 </h2>
 
                 <div className="grid gap-4 md:grid-cols-2">

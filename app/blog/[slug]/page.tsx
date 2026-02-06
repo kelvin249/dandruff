@@ -17,6 +17,7 @@ interface PostData {
   description: string;
   date?: string;
   image?: string;
+  tags?: string[];
 }
 
 async function getPost(slug: string) {
@@ -83,6 +84,9 @@ export async function generateMetadata({
   return {
     title: post.data.title,
     description: post.data.description,
+    alternates: {
+        canonical: `https://acme.com/blog/${slug}`,
+      },
     openGraph: {
       title: post.data.title,
       description: post.data.description,

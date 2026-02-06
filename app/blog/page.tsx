@@ -9,6 +9,9 @@ import { POSTS_PER_PAGE } from '@/lib/config';
 export const metadata: Metadata = {
   title: "Blog",
   description: "Read our latest blog posts",
+  alternates: {
+        canonical: "https://acme.com/blog",
+      },
   openGraph: {
     title: "Blog",
     description: "Read our latest blog posts",
@@ -21,9 +24,11 @@ interface Post {
   title: string;
   description: string;
   date?: string;
+  tags?: string[];
+  draft?: boolean;
 }
 
-async function getPosts(): Promise<Post[]> {
+export async function getPosts(): Promise<Post[]> {
   const postsDir = path.join(process.cwd(), "content/posts");
   const files = fs.readdirSync(postsDir);
 

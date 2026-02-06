@@ -4,6 +4,9 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "DanDruff",
   description: "A modern blog built with Next.js and MDX",
+  alternates: {
+        canonical: "https://acme.com",
+      },
   openGraph: {
     title: "DanDruff",
     description: "A modern blog built with Next.js and MDX",

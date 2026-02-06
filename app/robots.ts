@@ -4,10 +4,10 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
-        User-agent: *
-        Disallow: "/"
+        userAgent: '*',
+        disallow: '/',
       }
     ],
-    sitemap: 'https://acme.com/sitemap.xml',
+    sitemap: 'http://localhost:3000/sitemap.xml',
   };
 }
