@@ -89,7 +89,7 @@ export default async function CategoriesPage() {
             {sortedCategories.map((category) => (
               <div key={category} className="border-b border-zinc-200 dark:border-zinc-800 pb-8">
                 <h2 className="text-2xl font-bold text-black dark:text-white mb-6">
-                  <Link href={`/categories/${category}`}>{category}</Link> ({categoriesData[category].length})
+                  <Link href={`/categories/${category}`}> {category} </Link> ({categoriesData[category].length})
                 </h2>
 
                 <div className="grid gap-4 md:grid-cols-2">

@@ -6,6 +6,7 @@ import { useState } from "react";
 import ThemeSwitcher from './ThemeSwitcher';
 import { MobileMenu } from './MobileMenu';
 import { Button } from "@/components/ui/button"
+import SearchBar from "./SearchBar";
 
 export default function Header() {
   const pathname = usePathname();
@@ -26,51 +27,46 @@ export default function Header() {
           <nav className="hidden md:flex items-center gap-8">
             <Link
               href="/"
-              className={`transition-colors ${
-                pathname === "/"
+              className={`transition-colors ${pathname === "/"
                   ? "text-blue-600 dark:text-blue-400"
                   : "text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white"
-              }`}
+                }`}
             >
               <Button className="inline-block px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold"> Home </Button>
             </Link>
             <Link
               href="/blog"
-              className={`transition-colors ${
-                pathname.startsWith("/blog")
+              className={`transition-colors ${pathname.startsWith("/blog")
                   ? "text-blue-600 dark:text-blue-400"
                   : "text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white"
-              }`}
+                }`}
             >
               <Button className="inline-block px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold"> Blog </Button>
             </Link>
             <Link
               href="/tags"
-              className={`transition-colors ${
-                pathname.startsWith("/tags")
+              className={`transition-colors ${pathname.startsWith("/tags")
                   ? "text-blue-600 dark:text-blue-400"
                   : "text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white"
-              }`}
+                }`}
             >
               <Button className="inline-block px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold"> Tags </Button>
             </Link>
             <Link
               href="/categories"
-              className={`transition-colors ${
-                pathname.startsWith("/categories")
+              className={`transition-colors ${pathname.startsWith("/categories")
                   ? "text-blue-600 dark:text-blue-400"
                   : "text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white"
-              }`}
+                }`}
             >
               <Button className="inline-block px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold"> Categories </Button>
             </Link>
             <Link
               href="/about"
-              className={`transition-colors ${
-                pathname === "/about"
+              className={`transition-colors ${pathname === "/about"
                   ? "text-blue-600 dark:text-blue-400"
                   : "text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white"
-              }`}
+                }`}
             >
               <Button className="inline-block px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold"> About </Button>
             </Link>
@@ -86,6 +82,7 @@ export default function Header() {
           </div>
         </div>
       </div>
+      <SearchBar />
     </header>
   );
 }
