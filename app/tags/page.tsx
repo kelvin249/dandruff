@@ -3,6 +3,7 @@ import Link from "next/link";
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import Pagination from "@/components/Pagination";
 
 export const metadata: Metadata = {
   title: "Tags",
@@ -72,16 +73,30 @@ async function getAllPostsWithTags(): Promise<TagsData> {
   return tagsMap;
 }
 
-export default async function TagsPage() {
+export default async function TagsPage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ page?: string }>;
+}) {
   const tagsData = await getAllPostsWithTags();
   const sortedTags = Object.keys(tagsData).sort();
+  const params = await searchParams;
+
+  const perPage = 8;
+  const totalPages = Math.max(1, Math.ceil(sortedTags.length / perPage));
+  const currentPage = Math.min(
+    Math.max(1, parseInt((params && params.page) || "1", 10) || 1),
+    totalPages
+  );
+
+  const startIndex = (currentPage - 1) * perPage;
+  const endIndex = startIndex + perPage;
+  const paginatedTags = sortedTags.slice(startIndex, endIndex);
 
   return (
     <div className="min-h-screen bg-white dark:bg-black py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold text-black dark:text-white mb-2">
-          Tags
-        </h1>
+        <h1 className="text-4xl font-bold text-black dark:text-white mb-2">Tags</h1>
         <p className="text-zinc-600 dark:text-zinc-400 mb-12">
           Explore blog posts by topic ({sortedTags.length} tags)
         </p>
@@ -90,8 +105,11 @@ export default async function TagsPage() {
           <p className="text-zinc-600 dark:text-zinc-400">No tags found.</p>
         ) : (
           <div className="space-y-12">
-            {sortedTags.map((tag) => (
-              <div key={tag} className="border-b border-zinc-200 dark:border-zinc-800 pb-8">
+            {paginatedTags.map((tag) => (
+              <div
+                key={tag}
+                className="border-b border-zinc-200 dark:border-zinc-800 pb-8"
+              >
                 <h2 className="text-2xl font-bold text-black dark:text-white mb-6 capitalize">
                   <Link href={`/tags/${tag}`}>{tag}</Link> ({tagsData[tag].length})
                 </h2>
@@ -123,7 +141,13 @@ export default async function TagsPage() {
             ))}
           </div>
         )}
+
+        {sortedTags.length > perPage && (
+          <Pagination currentPage={currentPage} totalPages={totalPages} baseUrl="/tags" />
+        )}
       </div>
     </div>
   );
 }
+
+export const dynamic = "force-dynamic";

@@ -18,6 +18,7 @@ interface PostData {
   date?: string;
   image?: string;
   tags?: string[];
+  category?: string;
 }
 
 async function getPost(slug: string) {
@@ -190,6 +191,42 @@ export default async function PostPage({ params }: { params: Promise<PostParams>
             {/* MDX Content */}
             <div>
               <MDXRemote source={post.content} components={components} />
+            </div>
+
+            {/* Category and Tags Footer */}
+            <div className="mt-12 pt-8 border-t border-zinc-200 dark:border-zinc-800">
+              {post.data.category && (
+                <div className="mb-6">
+                  <h3 className="text-sm font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wide mb-2">
+                    Category
+                  </h3>
+                  <Link 
+                    href={`/categories/${post.data.category}`}
+                    className="inline-block px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded-full text-sm hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors"
+                  >
+                    {post.data.category}
+                  </Link>
+                </div>
+              )}
+
+              {post.data.tags && post.data.tags.length > 0 && (
+                <div>
+                  <h3 className="text-sm font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wide mb-2">
+                    Tags
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {post.data.tags.map((tag) => (
+                      <Link
+                        key={tag}
+                        href={`/tags/${String(tag).trim().toLowerCase()}`}
+                        className="px-3 py-1 bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-200 rounded-full text-sm hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
+                      >
+                        {tag}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Previous/Next Links */}

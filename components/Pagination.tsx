@@ -49,7 +49,7 @@ export default function Pagination({
       {/* Previous Button */}
       {currentPage > 1 ? (
         <Link
-          href={`${baseUrl}?page=${currentPage - 1}`}
+          href={{ pathname: baseUrl, query: { page: String(currentPage - 1) } }}
           className="px-3 py-2 rounded-lg border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors"
         >
           ← Previous
@@ -91,7 +91,7 @@ export default function Pagination({
           ) : (
             <Link
               key={pageNum}
-              href={`${baseUrl}?page=${pageNum}`}
+              href={{ pathname: baseUrl, query: { page: String(pageNum) } }}
               className="px-3 py-2 rounded-lg border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors"
             >
               {pageNum}
@@ -103,7 +103,7 @@ export default function Pagination({
       {/* Next Button */}
       {currentPage < totalPages ? (
         <Link
-          href={`${baseUrl}?page=${currentPage + 1}`}
+          href={{ pathname: baseUrl, query: { page: String(currentPage + 1) } }}
           className="px-3 py-2 rounded-lg border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors"
         >
           Next →

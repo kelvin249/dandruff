@@ -3,6 +3,7 @@ import Link from "next/link";
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import Pagination from "@/components/Pagination";
 
 export const metadata: Metadata = {
   title: "Categories",
@@ -68,9 +69,21 @@ async function getAllPostsWithCategories(): Promise<CategoriesData> {
   return categoriesMap;
 }
 
-export default async function CategoriesPage() {
+export default async function CategoriesPage({ searchParams }: { searchParams?: Promise<{ page?: string }> }) {
   const categoriesData = await getAllPostsWithCategories();
   const sortedCategories = Object.keys(categoriesData).sort();
+  const params = await searchParams;
+
+  const perPage = 8;
+  const totalPages = Math.max(1, Math.ceil(sortedCategories.length / perPage));
+  const currentPage = Math.min(
+    Math.max(1, parseInt((params && params.page) || "1", 10) || 1),
+    totalPages
+  );
+
+  const startIndex = (currentPage - 1) * perPage;
+  const endIndex = startIndex + perPage;
+  const paginatedCategories = sortedCategories.slice(startIndex, endIndex);
 
   return (
     <div className="min-h-screen bg-white dark:bg-black py-12 px-4 sm:px-6 lg:px-8">
@@ -86,7 +99,7 @@ export default async function CategoriesPage() {
           <p className="text-zinc-600 dark:text-zinc-400">No categories found.</p>
         ) : (
           <div className="space-y-12">
-            {sortedCategories.map((category) => (
+            {paginatedCategories.map((category) => (
               <div key={category} className="border-b border-zinc-200 dark:border-zinc-800 pb-8">
                 <h2 className="text-2xl font-bold text-black dark:text-white mb-6">
                   <Link href={`/categories/${category}`}> {category} </Link> ({categoriesData[category].length})
@@ -119,7 +132,12 @@ export default async function CategoriesPage() {
             ))}
           </div>
         )}
+        {sortedCategories.length > perPage && (
+          <Pagination currentPage={currentPage} totalPages={totalPages} baseUrl="/categories" />
+        )}
       </div>
     </div>
   );
 }
+
+export const dynamic = "force-dynamic";
