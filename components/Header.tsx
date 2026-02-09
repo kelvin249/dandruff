@@ -50,7 +50,7 @@ export default function Header() {
                   : "text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white"
                 }`}
             >
-              <Button className="inline-block px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold"> Tags </Button>
+              <Button className="inline-block px-4 py-3 bg-gray-600 text-white rounded-lg hover:bg-yellow-950 transition-colors font-semibold"> Tags </Button>
             </Link>
             <Link
               href="/categories"
